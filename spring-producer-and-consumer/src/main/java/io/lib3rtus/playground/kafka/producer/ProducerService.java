@@ -27,11 +27,10 @@ public class ProducerService {
             var message = new Message("1", "Title", "Some content", "Pera Peric");
             var listener = kafkaTemplate.send(TOPIC_NAME, objectMapper.writeValueAsString(message));
             log.info("Message dispatched");
-            listener.addCallback(result -> {
-                log.info("Message successfully sent. Send Result: {}", result);
-            }, (ex) -> {
-                log.error("Error sending message", ex);
-            });
+            listener.addCallback(
+                    result -> log.info("Message successfully sent. Send Result: {}", result),
+                    ex -> log.error("Error sending message", ex)
+            );
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
