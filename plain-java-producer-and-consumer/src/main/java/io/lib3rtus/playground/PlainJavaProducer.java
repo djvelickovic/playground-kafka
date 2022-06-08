@@ -23,7 +23,7 @@ public class PlainJavaProducer {
         props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, CustomInterceptor.class.getName());
 
         try (var kafkaProducer = new KafkaProducer<String, String>(props)) {
-            var record = new ProducerRecord<>("TestTopic1", "key", "Hello world!");
+            var record = new ProducerRecord<>(GlobalConfig.TOPIC_NAME, "key", "Hello world!");
             kafkaProducer.send(record, (recordMetadata, exception) -> {
                 if (exception != null) {
                     log.error("Error happened", exception);
